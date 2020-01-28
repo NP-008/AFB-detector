@@ -89,8 +89,8 @@ RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/lib
 
 ARG USE_PYTHON_3_NOT_2
 ARG _PY_SUFFIX=${USE_PYTHON_3_NOT_2:+3}
-ARG PYTHON=python${_PY_SUFFIX}
-ARG PIP=pip${_PY_SUFFIX}
+ARG PYTHON=python3
+ARG PIP=pip3
 
 # See http://bugs.python.org/issue19846
 ENV LANG C.UTF-8
@@ -116,10 +116,11 @@ RUN apt-get update && apt-get install -y \
     virtualenv \
     swig
 
-RUN ${PIP} --no-cache-dir install \
+RUN $pip3 --no-cache-dir install \
+    tensorflow-gpu==1.15 \
     Pillow \
     h5py \
-    keras \
+    keras \exit
     matplotlib \
     mock \
     numpy \
@@ -140,5 +141,5 @@ RUN mkdir /bazel && \
     /bazel/installer.sh && \
     rm -f /bazel/installer.sh
 
-COPY bashrc /etc/bash.bashrc
-RUN chmod a+rwx /etc/bash.bashrc
+#COPY bashrc /etc/bash.bashrc
+#RUN chmod a+rwx /etc/bash.bashrc
